@@ -11,8 +11,6 @@ def main():
     parser = argparse.ArgumentParser()
 
     # See lightgbm library for python for a list of parameters: https://lightgbm.readthedocs.io/en/latest/Parameters.html
-    # parser.add_argument('--train_split_data', type=str, help="training_data")
-    # parser.add_argument('--test_split_data', type=str, help="validation/testing data")
     parser.add_argument('--n_estimators', type=int, default=100, help="number of boosting iterations")
     parser.add_argument('--learning_rate', type=float, default=0.1, help="shrinkage rate")
     parser.add_argument('--max_depth', type=int, default=-1, help="max depth for tree model")
@@ -22,7 +20,6 @@ def main():
 
     run = Run.get_context()
 
-    # See np.types in algorithm docs
     run.log("n_estimators:", np.int(args.n_estimators))
     run.log("learning_rate:", np.float(args.learning_rate)) # see here for more ideas = https://bit.ly/3c2zJOm & https://bit.ly/3o6OAth
     run.log("max_depth:", np.int(args.max_depth))
@@ -39,7 +36,6 @@ def main():
 
     #evaluation set
     test_split_data = run.input_datasets["output_split_test"]
-    # test_split_data = test_split_data.parse_parquet_files()
     test_split_df = test_split_data.to_pandas_dataframe()
     
     x_test = test_split_df.loc[:, test_split_df.columns != 'Exited']  
@@ -47,11 +43,13 @@ def main():
     
     print(x_train.head(10))
     print(x_test.head(10))
+    
     # declaring our model with parameters - default and those declared in our hyperparameter space
     model = LGBMClassifier(n_estimators=args.n_estimators, learning_rate=args.learning_rate, max_depth=args.max_depth, subsample=args.subsample).fit(x_train, y_train)
 
     # save model
     os.makedirs('./outputs/model', exist_ok=True)
+    
     # files saved in the "outputs" folder are automatically uploaded into run history
     joblib.dump(model, './outputs/model/saved_model.joblib') 
     
