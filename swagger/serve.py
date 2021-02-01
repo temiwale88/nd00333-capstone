@@ -37,4 +37,5 @@ if __name__ == "__main__":
     else:
         port = 8000
 
+    print(f"Now serving HTTP on port: {port}")
     test(CORSRequestHandler, HTTPServer, port=port)
