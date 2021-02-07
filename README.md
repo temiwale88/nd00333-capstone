@@ -73,7 +73,7 @@ automl_config = AutoMLConfig(
 
 **RunDetails widget**  
 As part of our pipeline run we will run a RunDetails widget to show step runs with Azure’s Python SDK.
-![AutoML RunDetails widget](images/jupyter_python_sdk_rundetails_widget_automl.png)
+![AutoML RunDetails widget](images/jupyter_python_sdk_rundetails_widget_automl.PNG)
 
 **Best Model**  
 Our AutoML best model scored a weighted AUC of approximately 0.883. The best model was an ensemble ("VotingEnsemble"). From visual inspection, the ensemble includes a standard scaler preprocessing step with an XGBoost classifier as one of the key classifiers.  
@@ -82,7 +82,7 @@ Our AutoML best model scored a weighted AUC of approximately 0.883. The best mod
 [('datatransformer', DataTransformer(enable_dnn=None, enable_feature_sweeping=None, feature_sweeping_config=None, feature_sweeping_timeout=None, featurization_config=None, force_text_dnn=None, is_cross_validation=None, is_onnx_compatible=None, logger=None, observer=None, task=None, working_dir=None)), ('prefittedsoftvotingclassifier', PreFittedSoftVotingClassifier(classification_labels=None, estimators=[('25', Pipeline(memory=None, steps=[('standardscalerwrapper', ), ('xgboostclassifier', XGBoostClassifier(base_score=0.5, booster='gbtree', colsample_bylevel=1, colsample_bynode=1, colsample_bytree=1, e... min_impurity_decrease=0.0, min_impurity_split=None, min_samples_leaf=0.01, min_samples_split=0.15052631578947367, min_weight_fraction_leaf=0.0, n_estimators=50, n_jobs=1, oob_score=False, random_state=None, verbose=0, warm_start=False))], verbose=False))], flatten_transform=None, weights=[0.4, 0.06666666666666667, 0.2, 0.06666666666666667, 0.06666666666666667, 0.2]))]
 </pre>
 
-![AutoML best model](images/best_model_automl.png)
+![AutoML best model](images/best_model_automl.PNG)
 
 </br>
 
@@ -138,7 +138,7 @@ hyperdrive_config = HyperDriveConfig(estimator=est,
 
 **RunDetails widget**  
 As part of our pipeline run we will run a RunDetails widget to show step runs with Azure’s Python SDK.
-![HyperDrive RunDetails widget](images/jupyter_python_sdk_rundetails_widget_hd.png)
+![HyperDrive RunDetails widget](images/jupyter_python_sdk_rundetails_widget_hd.PNG)
 
 **Best model and hyperparameters**  
 The best LGBM model scored a weighted AUC of 0.900 (making it our best model for this classification task)
@@ -161,7 +161,7 @@ LGBMClassifier(boosting_type='gbdt', class_weight=None, colsample_bytree=1.0,
 
 We will deploy the best model (LGBM from HyperDrive model) and consume that model’s endpoint via an HTTP REST API. Below we see the endpoint as both deployed and active (or Deployment State: "Healthy").
 
-![Best model deployed and active](images/best_model_deployed.png)
+![Best model deployed and active](images/best_model_deployed.PNG)
 
 </br>
 
@@ -192,8 +192,8 @@ data = "{\"data\": " + X_train_json +"}"
 </details>
 </br>
 
-Swagger documentation demonstrating sample expected input and output for model endpoint consumption. Swagger allows for quick documentation of our model’s REST API. We are able to view the appropriate GET and POST endpoints as well as the expected data structure in JSON format.
-![Expected input format with Swagger](images/swagger.png)
+Swagger documentation demonstrating sample expected input and output for model endpoint consumption. Swagger allows for quick documentation of our model’s REST API. We are able to view the appropriate GET and POST endpoints as well as the expected data structure in JSON format.  
+![Expected input format with Swagger](images/swagger.PNG)
 
 </br>
 
@@ -202,12 +202,12 @@ Swagger documentation demonstrating sample expected input and output for model e
 ### Convert model to ONNX format and score
 
 We convert our model to ONNX format and use it to score data.  
-![Best model converted to ONNX](images/best_model_onnx.png)
+![Best model converted to ONNX](images/best_model_onnx.PNG)
 
 ### Enable App Insights
 
 **Endpoints section in Azure ML Studio, showing that “Application Insights enabled” says “true”. App Insights allow us to visually examine the health of our deployed endpoint.**  
-![Endpoints section in Azure ML Studio, showing that “Application Insights enabled” says “true”](images/app_insights_enabled.png)
+![Endpoints section in Azure ML Studio, showing that “Application Insights enabled” says “true”](images/app_insights_enabled.PNG)
 
 ### Enable logging
 
