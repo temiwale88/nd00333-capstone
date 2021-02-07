@@ -154,7 +154,7 @@ LGBMClassifier(boosting_type='gbdt', class_weight=None, colsample_bytree=1.0,
                subsample_for_bin=200000, subsample_freq=0)
 </pre>
 
-![Best HD model](images/best_model_hd.png)
+![Best HD model](images/best_model_hd.PNG)
 </br>
 
 ### **Deploying the best model**
