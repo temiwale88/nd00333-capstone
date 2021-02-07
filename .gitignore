@@ -2,4 +2,5 @@ config.json
 benchmark.sh
 endpoint.py
 *.webm
+*.mp4
 logs.py
