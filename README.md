@@ -6,6 +6,27 @@ Our objective is to leverage Azure’s Machine Learning (AML / ML) studio to tra
 
 The end product of this process is a reusable REST endpoint / HTTP API endpoint that can be consumed for real time inferencing (scoring). We will also perform load testing with Apache Bench simulating multiple POST requests to the endpoint. This helps us to benchmark our average response time to Azure’s 60 second benchmark and it allows us to check our model endpoint’s health status. Lastly, it is imperative that we wrap our experiments into reusable pipelines with Azure ML pipelines. This approach allows us to automate future predictive modeling via the pipeline’s REST endpoint.  
 
+## Quick Project Set Up and Installation
+
+To replicate these experiments in Azure ML (assuming you have provisioned an Azure ML workspace), simply download the automl.ipynb, hyperparameter_tuning.ipynb, and all the .py files in the 'scripts' directory. In total you should have 7 files in your **root** directory in Azure ML. The 'scripts' directory will be created, and their respective files copied, for you in Azure ML as you run the .ipynb notebooks for your experiments.  
+Your project directory in Azure ML will most likely look like this when you run the .ipynb notebooks:
+
+```
+udacity-nd00333-capstone
+├─ automl.ipynb
+├─ scripts
+│  ├─ model_deployment
+│  │  └─ score.py
+│  ├─ preprocess
+│  │  ├─ cleanse.py
+│  │  └─ encode.py
+│  └─ train
+│     ├─ train.py
+│     └─ train_test_split.py
+└─ hyperparameter_tuning.ipynb
+
+```
+
 ## Architectural Diagram
 
 **Azure ML Experiments Architecture**  
