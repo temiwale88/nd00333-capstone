@@ -129,7 +129,7 @@ Here, we want HyperDrive to evaluate number of estimators, learning rate, maximu
 
 See reference: <https://bit.ly/3rwh8Pc>
 
-- Learning rate: determines the impact of each tree on the final outcome. We use 
+- Learning rate: determines the impact of each tree on the final outcome
 - Number of estimators:  refers to the number of sequential trees to be modeled
 - Subsample: is the fraction of observations to be selected for each tree. This is done by random sampling.
 - Maximum depth: the maximum depth of a tree
