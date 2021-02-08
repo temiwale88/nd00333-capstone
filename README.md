@@ -4,6 +4,10 @@
 
 Our objective is to leverage Azure’s Machine Learning (AML / ML) studio to train a cloud-based machine learning production model with AutoML and HyperDrive, deploy the best model, and retrieve its REST endpoint for consumption. The training data is from a bank with some customer information. Our machine learning goal is to predict if a customer will churn (close their accounts) or not given a set of predictors such as creditscore, geography of origin etc. This, therefore, is a classification problem.
 
+### Overview of the dataset
+
+The dataset contains 10,000 rows with each row containing information for a current or previous customer on their CreditScore, Geography, Gender, Age, Tenure, Balance, NumOfProducts, HasCrCard, IsActiveMember, EstimatedSalary, and **importantly** if the **'Exited'** the bank or churned (11 columns in total). This is the predicted outcome of interest with which we can build a model to predict a current or future customer's propensity to churn.
+
 The end product of this process is a reusable REST endpoint / HTTP API endpoint that can be consumed for real time inferencing (scoring). We will also perform load testing with Apache Bench simulating multiple POST requests to the endpoint. This helps us to benchmark our average response time to Azure’s 60 second benchmark and it allows us to check our model endpoint’s health status. Lastly, it is imperative that we wrap our experiments into reusable pipelines with Azure ML pipelines. This approach allows us to automate future predictive modeling via the pipeline’s REST endpoint.  
 
 ## Quick Project Set Up and Installation
@@ -192,8 +196,12 @@ LGBMClassifier(boosting_type='gbdt', class_weight=None, colsample_bytree=1.0,
                subsample_for_bin=200000, subsample_freq=0)
 </pre>
 
-See best model from the **Azure ML Models** tab.
+Here's the best hyperdrive model from the **Azure ML Models** tab.
 ![Best HD model](images/best_model_hd.PNG)
+</br>
+
+Also, below is a snapshot showing the best hyperdrive model with its run id.  
+![Best HD model](images/best_model_hd_with_id.PNG)
 </br>
 
 ### **Deploying the best model**
