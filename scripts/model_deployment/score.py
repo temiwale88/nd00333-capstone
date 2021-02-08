@@ -42,6 +42,7 @@ def init():
 def run(data):
     try:
         result = model.predict(data)
+        print("Successfully predicted churn for customers with data provided")
         # You can return any data type, as long as it is JSON serializable.
         return json.dumps({"result": result.tolist()})
     except Exception as e:

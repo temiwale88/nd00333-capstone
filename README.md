@@ -106,6 +106,9 @@ Our AutoML best model scored a weighted AUC of approximately 0.883. The best mod
 
 ![AutoML best model](images/best_model_automl.PNG)
 
+See best AutoML model with its run id  
+![AutoML best model with id](images/best_model_automl_with_id.PNG)
+
 </br>
 
 ### **Azure ML HyperDrive Experiment**
@@ -189,6 +192,7 @@ LGBMClassifier(boosting_type='gbdt', class_weight=None, colsample_bytree=1.0,
                subsample_for_bin=200000, subsample_freq=0)
 </pre>
 
+See best model from the **Azure ML Models** tab.
 ![Best HD model](images/best_model_hd.PNG)
 </br>
 
@@ -201,7 +205,7 @@ We will deploy the best model (LGBM from HyperDrive model) and consume that mode
 </br>
 
 **Instructions on scoring with the deployed model endpoint**  
-To score new data with the model endpoint, we need to pass in an authentication key and wrap our data into a json format. This is the format the model expects. See swagger documentation snapshot below for example input and output.  
+To score new data with the model endpoint, we need to pass in a *scoring_uri* and an authentication api key (see below) into our header. But first, we need to wrap our data into a json format. See code snippet below for an example of what format the model expects our data to be passed as and **how to score data with the endpoint**. See swagger documentation snapshot below for example input and output. Additionally, see the *score.py* script in the **model_deployment** folder for details on how the endpoint functions. Of notable mention is that we declare an *init* function that passes our model into a global variable that is eventually received in our *run* function. The *run* function receives our json data and inferences / predictions are made using the now passed model.
 
 <details><summary>Click to see code block snippet</summary>
 <p>
@@ -210,16 +214,28 @@ To score new data with the model endpoint, we need to pass in an authentication 
 import requests
 import json
 
-scoring_uri = aci_service.scoring_uri
-headers = {'Content-Type':'application/json'}
-if aci_service.auth_enabled:
-    headers['Authorization'] = 'Bearer '+ aci_service.get_keys()[0] #Get primary key
-elif aci_service.token_auth_enabled:
-    headers['Authorization'] = 'Bearer '+ aci_service.get_token()[0]
-# Take four records
-X_train_uri_sub = x_train.loc[0:5]  
-X_train_json = X_train_uri_sub.to_json(orient='records')
-data = "{\"data\": " + X_train_json +"}"
+# URL for the web service, should be similar to:
+
+scoring_uri = 'http://ea7303af-11e3-4690-a17d-5e514407608f.westus2.azurecontainer.io/score'
+# If the service is authenticated, set the key or token
+key = 'qw0g2oicThz2IVNxEqi2hhMSAcL7ZkOM'
+
+# Four sets of data to score, so we get four results back
+data = {"data": [{"CreditScore":724,"Gender":1,"Age":30,"Tenure":10,"Balance":0.0,"NumOfProducts":2,"HasCrCard":1,"IsActiveMember":1,"EstimatedSalary":54265.55,"Geography_Germany":0,"Geography_Spain":0}]}
+
+# Convert to JSON string
+input_data = json.dumps(data)
+with open("data.json", "w") as _f:
+    _f.write(input_data)
+
+# Set the content type
+headers = {'Content-Type': 'application/json'}
+# If authentication is enabled, set the authorization header
+headers['Authorization'] = f'Bearer {key}'
+
+# Make the request and display the response
+resp = requests.post(scoring_uri, input_data, headers=headers)
+print(resp.json())
 
 ```
 
@@ -268,4 +284,4 @@ Our main goal is to eventually operationalize ML, for training and scoring, as a
 
 ## Screen Recording
 
-[Screencast Link](https://youtu.be/nJ-aVPpRPXE)
+[Screencast Link](https://youtu.be/qu2U3tcXkhc)
