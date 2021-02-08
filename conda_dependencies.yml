@@ -1,0 +1,22 @@
+name: udacity-capstone-project
+
+dependencies:
+- python=3.6.2
+- numpy
+- scikit-learn
+- pip:
+  - azureml-sdk
+  - azureml-core
+  - azureml-widgets
+  - azureml-opendatasets
+  - azureml-train-automl
+  - azureml-defaults
+  - inference_schema
+  - matplotlib
+  - onnxruntime
+  - pandas
+  - packaging
+  - seaborn
+channels:
+- anaconda
+- conda-forge

@@ -8,12 +8,13 @@ The end product of this process is a reusable REST endpoint / HTTP API endpoint 
 
 ## Quick Project Set Up and Installation
 
-To replicate these experiments in Azure ML (assuming you have provisioned an Azure ML workspace), simply download the automl.ipynb, hyperparameter_tuning.ipynb, and all the .py files in the 'scripts' directory. In total you should have 7 files in your **root** directory in Azure ML. The 'scripts' directory will be created, and their respective files copied, for you in Azure ML as you run the .ipynb notebooks for your experiments.  
-Your project directory in Azure ML will most likely look like this when you run the .ipynb notebooks:
+To replicate these experiments in Azure ML (assuming you have provisioned an Azure ML workspace), simply download the automl.ipynb, hyperparameter_tuning.ipynb, and all the .py files in the 'scripts' directory. In total you should have 7 files in your **root** directory in Azure ML. The 'scripts' directory will be created, and their respective files copied, for you in Azure ML as you run the .ipynb notebooks for your experiments. An additional note is that we configure our experiment enviorment using a YAML configuration file. See the "**conda_dependencies.yml**" file for illustration. However, you do not need to download this file as we create the YAML file within our jupyter notebooks (automl and hypeparemeter_tun...).  
+Your project / **root** directory in Azure ML will most likely look like this when you run the .ipynb notebooks:
 
 ```
 udacity-nd00333-capstone
 ├─ automl.ipynb
+├─ hyperparameter_tuning.ipynb
 ├─ scripts
 │  ├─ model_deployment
 │  │  └─ score.py
@@ -23,7 +24,7 @@ udacity-nd00333-capstone
 │  └─ train
 │     ├─ train.py
 │     └─ train_test_split.py
-└─ hyperparameter_tuning.ipynb
+└─ conda_dependencies.yml
 
 ```
 
@@ -69,7 +70,7 @@ from azureml.train.automl import AutoMLConfig
 label = 'Exited' #predicted y_column
 
 # Set parameters for AutoMLConfig
-
+# Alternatively, we could separate this into automl_settings and automl_config objects.
 automl_config = AutoMLConfig(
     experiment_timeout_minutes=30,
     blocked_models = ['SVM', 'LinearSVM'],
@@ -118,6 +119,19 @@ Key highlights:
 We will define an early termnination policy. The BanditPolicy states to check the job every 10 iterations ("evaluation_interval"). If the primary metric for a run after the 10th iteration falls outside of the top 10% range (slack factor), Azure ML will terminate the job. This saves us from continuing to explore hyperparameters that don't show promise of helping reach our target metric. This policy is **first** applied at interval 20 ("delay evaluation")
 
 Here, we want HyperDrive to evaluate number of estimators, learning rate, maximum depth, and subsample for our tree-based light gradient boosted machine (LGBM) model.We also declare default hyperparameters in our train.py.
+
+See reference: <https://bit.ly/3rwh8Pc>
+
+- Learning rate: determines the impact of each tree on the final outcome. We use 
+- Number of estimators:  refers to the number of sequential trees to be modeled
+- Subsample: is the fraction of observations to be selected for each tree. This is done by random sampling.
+- Maximum depth: the maximum depth of a tree
+</br>
+
+We specify our range of hyperparameter options or distributions, to be randomly selected for an experiment, using two functions:
+
+- Choice: specifies a *discrete* set of options from which to choose. For instance, there are only 3 options our random search algorithm can select for *number of estimators*.
+- Uniform: creates a *uniform* distribution between the range specified from which we can randomly select.
 
 <details><summary>Click to see code block snippet</summary>
 <p>
