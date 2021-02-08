@@ -201,7 +201,7 @@ Here's the best hyperdrive model from the **Azure ML Models** tab.
 </br>
 
 Also, below is a snapshot showing the best hyperdrive model with its run id.  
-![Best HD model](images/best_model_hd_with_id.PNG)
+![Best HD model](images/best_model_hd_with_id.png)
 </br>
 
 ### **Deploying the best model**
