@@ -61,7 +61,7 @@ def main():
     run.log("Accuracy", np.float(accuracy)) #source: https://bit.ly/3mTxEWR && https://bit.ly/3hgonXx
   
     y_pred = model.predict(x_test)
-    auc_weighted = roc_auc_score(y_pred, y_test, average='weighted')
+    auc_weighted = roc_auc_score(y_test, y_pred, average='weighted')
     run.log("AUC_weighted", np.float(auc_weighted)) #source: https://bit.ly/3mTxEWR && https://bit.ly/3hgonXx
     
     # creating a confusion matrix
